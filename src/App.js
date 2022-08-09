@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 
 const App = () => {
+  const [todo, setTodo] = useState([
+    {
+      id: 1,
+      title: "공부하기",
+      completed: true,
+    },
+    {
+      id: 2,
+      title: "청소하기",
+      completed: false,
+    },
+  ]);
+
   const btnStyle = {
     color: "#fff",
     border: "none",
@@ -17,22 +30,8 @@ const App = () => {
     textDecoration: "none",
   });
 
-  let todoData = [
-    {
-      id: 1,
-      title: "공부하기",
-      completed: true,
-    },
-    {
-      id: 2,
-      title: "청소하기",
-      completed: false,
-    },
-  ];
-
   const handleClick = (id) => {
-    const newTodoData = todoData.filter((todo) => todo.id !== id);
-    console.log(newTodoData);
+    setTodo((prev) => prev.filter((todo) => todo.id !== id));
   };
 
   return (
@@ -41,7 +40,7 @@ const App = () => {
         <div className="title">
           <h1>할 일 목록</h1>
         </div>
-        {todoData.map((todo) => (
+        {todo.map((todo) => (
           <div style={getStyle()} key={todo.id}>
             <input type="checkBox" defaultChecked={todo.completed} />
             {todo.title}
