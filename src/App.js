@@ -17,7 +17,7 @@ const App = () => {
     textDecoration: "none",
   });
 
-  const todoData = [
+  let todoData = [
     {
       id: 1,
       title: "공부하기",
@@ -30,6 +30,11 @@ const App = () => {
     },
   ];
 
+  const handleClick = (id) => {
+    const newTodoData = todoData.filter((todo) => todo.id !== id);
+    console.log(newTodoData);
+  };
+
   return (
     <div className="container">
       <div className="todoBlock">
@@ -40,7 +45,9 @@ const App = () => {
           <div style={getStyle()} key={todo.id}>
             <input type="checkBox" defaultChecked={todo.completed} />
             {todo.title}
-            <button style={btnStyle}>x</button>
+            <button style={btnStyle} onClick={() => handleClick(todo.id)}>
+              x
+            </button>
           </div>
         ))}
       </div>
