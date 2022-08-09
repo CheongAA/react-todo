@@ -17,17 +17,32 @@ const App = () => {
     textDecoration: "none",
   });
 
+  const todoData = [
+    {
+      id: 1,
+      title: "공부하기",
+      completed: true,
+    },
+    {
+      id: 2,
+      title: "청소하기",
+      completed: false,
+    },
+  ];
+
   return (
     <div className="container">
       <div className="todoBlock">
         <div className="title">
           <h1>할 일 목록</h1>
         </div>
-        <div style={getStyle()}>
-          <input type="checkBox" defaultChecked={false} />
-          공부하기
-          <button style={btnStyle}>x</button>
-        </div>
+        {todoData.map((todo) => (
+          <div style={getStyle()} key={todo.id}>
+            <input type="checkBox" defaultChecked={todo.completed} />
+            {todo.title}
+            <button style={btnStyle}>x</button>
+          </div>
+        ))}
       </div>
     </div>
   );
