@@ -3,18 +3,7 @@ import "./App.css";
 
 const App = () => {
   const [inputValue, setInputValue] = useState("");
-  const [todo, setTodo] = useState([
-    {
-      id: 1,
-      title: "공부하기",
-      completed: true,
-    },
-    {
-      id: 2,
-      title: "청소하기",
-      completed: false,
-    },
-  ]);
+  const [todo, setTodo] = useState([]);
 
   const btnStyle = {
     color: "#fff",
@@ -25,11 +14,25 @@ const App = () => {
     float: "right",
   };
 
-  const getStyle = () => ({
+  const getStyle = (completed) => ({
     padding: "10px",
     borderBottom: "1px dotted #ccc",
-    textDecoration: "none",
+    textDecoration: completed ? "line-through" : "none",
   });
+
+  const handleCompletedChange = (id) => {
+    setTodo((prev) =>
+      prev.map((todo) => {
+        if (todo.id === id) {
+          return {
+            ...todo,
+            completed: !todo.completed,
+          };
+        }
+        return todo;
+      })
+    );
+  };
 
   const handleClick = (id) => {
     setTodo((prev) => prev.filter((todo) => todo.id !== id));
@@ -59,8 +62,12 @@ const App = () => {
           <h1>할 일 목록</h1>
         </div>
         {todo.map((todo) => (
-          <div style={getStyle()} key={todo.id}>
-            <input type="checkBox" defaultChecked={todo.completed} />
+          <div style={getStyle(todo.completed)} key={todo.id}>
+            <input
+              type="checkBox"
+              defaultChecked={todo.completed}
+              onChange={() => handleCompletedChange(todo.id)}
+            />
             {todo.title}
             <button style={btnStyle} onClick={() => handleClick(todo.id)}>
               x
